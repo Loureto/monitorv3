@@ -1,0 +1,34 @@
+{
+  "name": "authenticate",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@chakra-ui/react": "^1.8.6",
+    "@emotion/react": "^11.8.1",
+    "@emotion/styled": "^11.8.1",
+    "axios": "^0.26.1",
+    "framer-motion": "^6.2.8",
+    "jwt-decode": "^3.1.2",
+    "next": "12.1.0",
+    "nookies": "^2.5.2",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "react-icons": "^4.3.1",
+    "yarn": "^1.22.17"
+  },
+  "devDependencies": {
+    "@types/node": "17.0.21",
+    "@types/react": "17.0.39",
+    "eslint": "8.10.0",
+    "eslint-config-next": "12.1.0",
+    "miragejs": "^0.1.44",
+    "tsconfig-paths": "^3.14.0",
+    "typescript": "4.6.2"
+  }
+}
