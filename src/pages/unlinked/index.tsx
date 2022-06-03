@@ -1,4 +1,3 @@
-import Router from "next/router";
 import { Flex } from "@chakra-ui/react";
 import Header from "@components/Header";
 import TextCustom from "src/components/Text";
@@ -7,9 +6,11 @@ import ButtonCustom from "src/components/Button";
 import Footer from "src/components/Footer";
 import { IoWarningOutline } from "react-icons/io5";
 import { withSSRAuth } from "@utils/withSSRAuth";
+import { useContext } from "react";
+import { AuthContext } from "@contexts/authContext";
 
 const Unlinked = () => {
-  const handleClick = () => Router.replace("/");
+  const { signOut } = useContext(AuthContext);
 
   return (
     <Flex width="100%" height="100vh" flex="1" flexDir="column">
@@ -51,7 +52,7 @@ const Unlinked = () => {
           width="383px"
           height="48px"
           marginTop="2.5rem"
-          onClick={() => handleClick()}
+          onClick={signOut}
         >
           Entendi
         </ButtonCustom>

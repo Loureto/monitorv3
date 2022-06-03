@@ -1,10 +1,11 @@
 import type { AppProps } from "next/app";
-import { ChakraProvider } from "@chakra-ui/react";
-import theme from "@styles/theme";
-import { AuthProvider } from "@contexts/authContext";
 import Head from "next/head";
-import "../styles/fonts.css";
+import { ChakraProvider } from "@chakra-ui/react";
+import { AuthProvider } from "@contexts/authContext";
 import { DashboardProvider } from "@contexts/dashboardContext";
+import theme from "@styles/theme";
+import "../styles/fonts.scss";
+import "../styles/table.scss";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (

@@ -1,6 +1,14 @@
-import { Flex } from "@chakra-ui/react";
+import {
+  Flex,
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
+  TableContainer,
+} from "@chakra-ui/react";
 import SkeletonClient from "@components/SkeletonClient";
-import Task from "@components/Task";
 import TextCustom from "@components/Text";
 import { DashboardContext } from "@contexts/dashboardContext";
 import { useContext, useEffect } from "react";
@@ -11,14 +19,69 @@ interface CardClientProps {
 
 const CardClient = ({ status }: CardClientProps) => {
   const { currentSubsidiary, ordersZeroCheckin } = useContext(DashboardContext);
+
   useEffect(() => {
     console.log({ ordersZeroCheckin });
   }, [ordersZeroCheckin]);
-  let count = 1;
 
   return (
     <Flex width="40%" flexDir="column">
       <TextCustom
+        margin="32px 0 16px 0"
+        color="black.500"
+        fontStyle="normal"
+        fontWeight="500"
+        fontSize={{
+          base: "1rem",
+          xl: "1.5rem",
+          "2xl": "2rem",
+          "3xl": "2.25rem",
+          "4xl": "2.5rem",
+          "5xl": "3rem",
+        }}
+        lineHeight="38px"
+      >
+        {`Total de clientes pendentes ${
+          status === "idle" || status === "loading" ? "" : currentSubsidiary
+        }`}
+      </TextCustom>
+      <TableContainer className="tableCardClient" width="100%">
+        <Table variant="striped" colorScheme="blackAlpha">
+          <Thead bgColor="blue.500">
+            <Tr>
+              <Th className="title">Nº do pacote</Th>
+              <Th className="title">Prazo</Th>
+              <Th className="title">Cliente</Th>
+            </Tr>
+          </Thead>
+
+          {status === "success" && ordersZeroCheckin.length > 0 ? (
+            ordersZeroCheckin.map((item) => (
+              <Tbody key={item.customerId} {...item}>
+                {item.pendencies.map((pendencie) => (
+                  <Tr key={pendencie.clientId}>
+                    <Td className="subtitleCode">{pendencie.codeERP}</Td>
+                    <Td className="subtitle">{pendencie.createdTime}</Td>
+                    <Td className="subtitle">
+                      {pendencie.clientName.substring(0, 15)}
+                    </Td>
+                  </Tr>
+                ))}
+              </Tbody>
+            ))
+          ) : (
+            <>{status === "loading" && <SkeletonClient />}</>
+          )}
+        </Table>
+      </TableContainer>
+    </Flex>
+  );
+};
+
+export default CardClient;
+
+{
+  /* <TextCustom
         margin="32px 0 16px 0"
         color="black.500"
         fontStyle="normal"
@@ -94,38 +157,5 @@ const CardClient = ({ status }: CardClientProps) => {
         >
           Cliente
         </TextCustom>
-      </Flex>
-
-      {/* {Array(8).map((key) => (
-        <SkeletonClient key={key} />
-      ))} */}
-      {/* {status === "success" &&
-        ordersZeroCheckin.length > 0 &&
-        ordersZeroCheckin[0].pendencies.map((item) => (
-          <div key={item.clientId}>Test</div>
-        ))} */}
-
-      {status === "success" && ordersZeroCheckin.length > 0 ? (
-        ordersZeroCheckin.map(({ pendencies, customerId }) => (
-          <div key={customerId}>
-            {pendencies.map((pendencie) => {
-              <div key={pendencie.clientId}>teste2</div>;
-              // <Task
-              //   key={pendencie.clientId}
-              //   package={pendencie.codeERP}
-              //   deadline={pendencie.createdTime}
-              //   client={pendencie.clientName}
-              //   color={pendencie.labelButton.collorButton}
-              //   bgColor="gray.100"
-              // />;
-            })}
-          </div>
-        ))
-      ) : (
-        <SkeletonClient />
-      )}
-    </Flex>
-  );
-};
-
-export default CardClient;
+      </Flex> */
+}

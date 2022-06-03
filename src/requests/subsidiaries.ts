@@ -8,7 +8,6 @@ async function getSubsidiaries(user: string, lat, long): Promise<Subsidiaries> {
     );
     return response;
   } catch (error) {
-    // console.log("ERROR: ", error.response?.data.description);
     return error;
   }
 }
