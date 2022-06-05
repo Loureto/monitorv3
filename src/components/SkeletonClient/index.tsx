@@ -1,8 +1,13 @@
-import { Flex, Skeleton } from "@chakra-ui/react";
+import { Flex, Skeleton, Tbody, Td, Tr } from "@chakra-ui/react";
 
 const SkeletonClient = () => {
-  return (
-    <Flex width="100%" marginTop="16px" align="center">
+  return <Skeleton width="16px" height="96px" />;
+};
+
+export default SkeletonClient;
+
+{
+  /* <Flex width="100%" marginTop="16px" align="center">
       <Skeleton
         width="16px"
         height={{ base: "60px", xl: "60px", "2xl": "79px" }}
@@ -51,8 +56,5 @@ const SkeletonClient = () => {
           mr={{ base: "10px", xl: "30px" }}
         />
       </Flex>
-    </Flex>
-  );
-};
-
-export default SkeletonClient;
+    </Flex> */
+}

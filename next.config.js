@@ -9,5 +9,5 @@ const nextConfig = {
 
 module.exports = nextConfig;
 
-//https://dev-services.labpetz.com.br
-//https://prd-services.petz.com.br
+// https://dev-services.labpetz.com.br
+// https://prd-services.petz.com.br

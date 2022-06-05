@@ -8,17 +8,22 @@ import getOrdersZeroCheckin from "src/requests/orders_zero_checkin";
 import { DashboardContextData } from "src/types/dashboard";
 import { CleanOrders } from "src/requests/clean_orders";
 import Router from "next/router";
+import { OrdersEcommerce } from "src/types/orders_ecommerce";
+import { getOrdersEcommerce } from "src/requests/orders_ecommerce";
 
 export const DashboardContext = createContext({} as DashboardContextData);
 
 export function DashboardProvider({ children }) {
   const [statusFilial, setStatusFilial] = useState<State>("idle");
   const [stateOrders, setStateOrders] = useState<State>("idle");
+  const [stateOrdersEcommerce, setStateOrdersEcommerce] =
+    useState<State>("idle");
   const [currentSubsidiary, setSubsidiary] = useState<string>();
   const [subsidiaries, setSubsidiaries] = useState<Subsidiaries>();
   const [ordersZeroCheckin, setOrdersZeroCheckin] = useState<
     OrdersZeroCheckin[]
   >([]);
+  const [ordersEcommerce, setOrdersEcommerce] = useState<OrdersEcommerce[]>([]);
   const { PICKUP_SUB: sub, LAT: lat, LONG: long } = parseCookies();
 
   const fetchDataFilial = async () => {
@@ -39,11 +44,24 @@ export function DashboardProvider({ children }) {
     const { data: ordersCheckin } = await getOrdersZeroCheckin(
       currentSubsidiary
     );
-    if (ordersCheckin?.length!!) {
-      console.log("Nao ha pedidos");
+    if (ordersCheckin?.length > 0) {
+      console.log("Tem pedidos");
       setOrdersZeroCheckin(ordersCheckin);
+      setStateOrders("success");
+    } else {
+      setStateOrders("error");
     }
-    setStateOrders("success");
+  };
+
+  const fetchDataOrderEcommerce = async () => {
+    setStateOrdersEcommerce("loading");
+    const data = await getOrdersEcommerce(currentSubsidiary);
+
+    if (data?.length > 0) {
+      console.log(data);
+      setOrdersEcommerce(data);
+    }
+    setStateOrdersEcommerce("success");
   };
 
   const fetchDataCleanOrder = async () => {
@@ -64,6 +82,9 @@ export function DashboardProvider({ children }) {
         fetchDataOrder,
         stateOrders,
         fetchDataCleanOrder,
+        fetchDataOrderEcommerce,
+        stateOrdersEcommerce,
+        ordersEcommerce,
       }}
     >
       {children}

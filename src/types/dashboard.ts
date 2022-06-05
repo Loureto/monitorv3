@@ -1,3 +1,4 @@
+import { OrdersEcommerce } from "./orders_ecommerce";
 import { OrdersZeroCheckin } from "./orders_types";
 import { Subsidiaries } from "./subsidiary_types";
 
@@ -13,4 +14,7 @@ export interface DashboardContextData {
   fetchDataOrder: () => Promise<void>;
   stateOrders: string;
   fetchDataCleanOrder: () => Promise<void>;
+  fetchDataOrderEcommerce: () => Promise<void>;
+  stateOrdersEcommerce: string;
+  ordersEcommerce: OrdersEcommerce[];
 }

@@ -1,6 +1,6 @@
 import { Input, InputProps } from "@chakra-ui/react";
 
-const InputCustom = ({ ...rest }: InputProps) => {
+const InputCustom = ({ name, ...rest }: InputProps) => {
   return (
     <Input
       width="340px"

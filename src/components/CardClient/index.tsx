@@ -1,3 +1,4 @@
+import { useContext, useEffect } from "react";
 import {
   Flex,
   Table,
@@ -7,25 +8,24 @@ import {
   Th,
   Td,
   TableContainer,
+  Tabs,
+  Tab,
+  VStack,
 } from "@chakra-ui/react";
 import SkeletonClient from "@components/SkeletonClient";
 import TextCustom from "@components/Text";
 import { DashboardContext } from "@contexts/dashboardContext";
-import { useContext, useEffect } from "react";
 
-interface CardClientProps {
-  status: string;
-}
-
-const CardClient = ({ status }: CardClientProps) => {
-  const { currentSubsidiary, ordersZeroCheckin } = useContext(DashboardContext);
+const CardClient = () => {
+  const { currentSubsidiary, ordersZeroCheckin, stateOrders } =
+    useContext(DashboardContext);
 
   useEffect(() => {
     console.log({ ordersZeroCheckin });
   }, [ordersZeroCheckin]);
 
   return (
-    <Flex width="40%" flexDir="column">
+    <Flex width="100%" maxWidth="40%" flexDir="column" boxSizing="border-box">
       <TextCustom
         margin="32px 0 16px 0"
         color="black.500"
@@ -42,36 +42,61 @@ const CardClient = ({ status }: CardClientProps) => {
         lineHeight="38px"
       >
         {`Total de clientes pendentes ${
-          status === "idle" || status === "loading" ? "" : currentSubsidiary
+          stateOrders === "idle" || stateOrders === "loading"
+            ? ""
+            : currentSubsidiary
         }`}
       </TextCustom>
-      <TableContainer className="tableCardClient" width="100%">
-        <Table variant="striped" colorScheme="blackAlpha">
-          <Thead bgColor="blue.500">
-            <Tr>
-              <Th className="title">Nº do pacote</Th>
-              <Th className="title">Prazo</Th>
-              <Th className="title">Cliente</Th>
-            </Tr>
-          </Thead>
 
-          {status === "success" && ordersZeroCheckin.length > 0 ? (
-            ordersZeroCheckin.map((item) => (
-              <Tbody key={item.customerId} {...item}>
-                {item.pendencies.map((pendencie) => (
-                  <Tr key={pendencie.clientId}>
-                    <Td className="subtitleCode">{pendencie.codeERP}</Td>
-                    <Td className="subtitle">{pendencie.createdTime}</Td>
-                    <Td className="subtitle">
-                      {pendencie.clientName.substring(0, 15)}
-                    </Td>
-                  </Tr>
-                ))}
-              </Tbody>
-            ))
-          ) : (
-            <>{status === "loading" && <SkeletonClient />}</>
-          )}
+      <Table className="tableCardClient" width="100%" boxSizing="border-box">
+        <Thead bgColor="blue.500">
+          <Tr>
+            <Th className="title">Nº do pacote</Th>
+            <Th className="title" textAlign="center">
+              Prazo
+            </Th>
+            <Th className="title" textAlign="center">
+              Cliente
+            </Th>
+          </Tr>
+        </Thead>
+      </Table>
+
+      <TableContainer overflowY="auto">
+        <Table
+          className="tableCardClient"
+          width="100%"
+          flex="1"
+          boxSizing="border-box"
+        >
+          <Tbody>
+            {stateOrders === "success" && ordersZeroCheckin.length > 0 ? (
+              ordersZeroCheckin.map((item) => (
+                <Tr key={item.customerId}>
+                  {item.pendencies.map((pendencie) => (
+                    <>
+                      <Td
+                        className="subtitleCode"
+                        key={pendencie.clientId}
+                        boxShadow={`16px 0px 0px 0px ${pendencie.labelButton.collorButton} inset`}
+                      >
+                        {pendencie.codeERP}
+                      </Td>
+                      <Td className="subtitle">{pendencie.time}</Td>
+                      <Td className="subtitle">
+                        {pendencie?.clientName
+                          ?.split(" ")
+                          .slice(0, 2)
+                          .join(" ")}
+                      </Td>
+                    </>
+                  ))}
+                </Tr>
+              ))
+            ) : (
+              <>{stateOrders === "loading" && <SkeletonClient />}</>
+            )}
+          </Tbody>
         </Table>
       </TableContainer>
     </Flex>

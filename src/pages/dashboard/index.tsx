@@ -14,8 +14,8 @@ const Dashboard = () => {
     fetchDataFilial,
     statusFilial,
     fetchDataOrder,
-    stateOrders,
     fetchDataCleanOrder,
+    fetchDataOrderEcommerce,
   } = useContext(DashboardContext);
 
   useEffect(() => {
@@ -33,15 +33,20 @@ const Dashboard = () => {
 
   useEffect(() => {
     fetchDataOrder();
+    fetchDataOrderEcommerce();
+
+    // setInterval(() => {
+    //   fetchDataOrder();
+    // }, 10000);
   }, [currentSubsidiary]);
 
   return (
     <Flex width="100%" height="100vh" flex="1" flexDir="column" align="center">
       <Header showItem={true} status={statusFilial} />
 
-      <Flex width="100%" px="1.25rem" flex="1">
+      <Flex width="100%" px="1.25rem" flex="1" height="80vh">
         <Stack direction="row" width="100%" spacing="32px" flex="1">
-          <CardClient status={stateOrders} />
+          <CardClient />
           <CardTask />
         </Stack>
       </Flex>
