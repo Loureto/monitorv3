@@ -3,7 +3,7 @@ const nextConfig = {
   reactStrictMode: true,
 
   env: {
-    BASE_API_URL: "https://prd-services.petz.com.br",
+    BASE_API_URL: "https://dev-services.labpetz.com.br",
   },
 };
 

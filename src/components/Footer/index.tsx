@@ -1,4 +1,5 @@
-import { Flex, FlexProps, Text, VStack } from "@chakra-ui/react";
+import { Flex, FlexProps, VStack } from "@chakra-ui/react";
+import { useState } from "react";
 import TextCustom from "../Text";
 
 interface FooterProps extends FlexProps {
@@ -6,9 +7,14 @@ interface FooterProps extends FlexProps {
 }
 
 const Footer = ({ show, ...rest }: FooterProps) => {
-  const date = new Intl.DateTimeFormat("pt-BR", {
-    timeStyle: "medium",
-  }).format();
+  let time = new Date().toLocaleTimeString();
+  let [ctime, setCTime] = useState<any>();
+  const updateTime = () => {
+    time = new Date().toLocaleTimeString();
+    setCTime(time);
+  };
+  setInterval(updateTime, 1000);
+
   return (
     <Flex
       width="100%"
@@ -33,7 +39,7 @@ const Footer = ({ show, ...rest }: FooterProps) => {
           fontWeight="700"
           fontSize={{ base: "2.5rem", xl: "2.5rem", "2xl": "3rem" }}
         >
-          {date}
+          {ctime}
         </TextCustom>
       )}
     </Flex>

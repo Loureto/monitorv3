@@ -28,6 +28,7 @@ export function DashboardProvider({ children }) {
 
   const fetchDataFilial = async () => {
     setStatusFilial("loading");
+
     const data = await getSubsidiaries(sub, lat, long);
 
     if (!data) {
